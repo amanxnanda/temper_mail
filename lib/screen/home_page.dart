@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -37,7 +38,7 @@ class HomePage extends StatelessWidget {
               ),
               OutlinedButton.icon(
                 onPressed: () {},
-                icon: Icon(Icons.copy),
+                icon: Icon(FontAwesomeIcons.copy),
                 label: Text('Clipboard'),
                 style: OutlinedButton.styleFrom(
                   elevation: 5,
