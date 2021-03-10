@@ -22,15 +22,24 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               OutlinedButton.icon(
                 onPressed: () {},
                 icon: Icon(Icons.redo),
                 label: Text('Regenerate'),
-
-                
+              ),
+              OutlinedButton.icon(
+                onPressed: () {},
+                icon: Icon(Icons.copy),
+                label: Text('Copy to Clipboard'),
               ),
             ],
+          ),
+          Expanded(
+            child: Column(
+              children: [],
+            ),
           ),
         ],
       ),
