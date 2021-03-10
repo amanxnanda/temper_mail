@@ -7,9 +7,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.greenAccent,
+      backgroundColor: Colors.teal[100],
       appBar: AppBar(
-        title: Text('Fake Mail'),
+        title: Center(
+            child: Text(
+          'Fake Mail Generator',
+          style:
+              TextStyle(color: Colors.amber[300], fontWeight: FontWeight.bold),
+        )),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,7 +37,7 @@ class HomePage extends StatelessWidget {
                 label: Text('Refresh'),
                 style: OutlinedButton.styleFrom(
                   elevation: 5,
-                  backgroundColor: Colors.amber,
+                  backgroundColor: Colors.amber[300],
                   padding: EdgeInsets.all(20),
                 ),
               ),
@@ -42,7 +47,7 @@ class HomePage extends StatelessWidget {
                 label: Text('Clipboard'),
                 style: OutlinedButton.styleFrom(
                   elevation: 5,
-                  backgroundColor: Colors.amber,
+                  backgroundColor: Colors.amber[300],
                   padding: EdgeInsets.all(20),
                 ),
               ),
@@ -54,7 +59,7 @@ class HomePage extends StatelessWidget {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
-                  for (var i = 0; i < 10; i++)
+                  for (var i = 1; i < 10; i++)
                     ListTile(
                       leading: CircleAvatar(),
                       title: Text('$i Name'),
