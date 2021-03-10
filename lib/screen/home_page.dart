@@ -6,6 +6,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.greenAccent,
       appBar: AppBar(
         title: Text('Fake Mail'),
       ),
@@ -14,10 +15,10 @@ class HomePage extends StatelessWidget {
         children: [
           Image.asset('assets/img.png'),
           Card(
-            elevation: 10.0,
+            elevation: 5.0,
             margin: EdgeInsets.all(10),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: Text('example@gmail.com'),
             ),
           ),
@@ -26,19 +27,41 @@ class HomePage extends StatelessWidget {
             children: [
               OutlinedButton.icon(
                 onPressed: () {},
-                icon: Icon(Icons.redo),
-                label: Text('Regenerate'),
+                icon: Icon(Icons.autorenew),
+                label: Text('Refresh'),
+                style: OutlinedButton.styleFrom(
+                  elevation: 5,
+                  backgroundColor: Colors.amber,
+                  padding: EdgeInsets.all(20),
+                ),
               ),
               OutlinedButton.icon(
                 onPressed: () {},
                 icon: Icon(Icons.copy),
-                label: Text('Copy to Clipboard'),
+                label: Text('Clipboard'),
+                style: OutlinedButton.styleFrom(
+                  elevation: 5,
+                  backgroundColor: Colors.amber,
+                  padding: EdgeInsets.all(20),
+                ),
               ),
             ],
           ),
           Expanded(
-            child: Column(
-              children: [],
+            child: Card(
+              margin: EdgeInsets.only(top: 10.0),
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                children: [
+                  for (var i = 0; i < 10; i++)
+                    ListTile(
+                      leading: CircleAvatar(),
+                      title: Text('$i Name'),
+                      subtitle: Text('Subject'),
+                      trailing: Text('12:0$i pm'),
+                    ),
+                ],
+              ),
             ),
           ),
         ],
