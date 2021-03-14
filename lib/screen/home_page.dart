@@ -7,14 +7,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
         title: Center(
-            child: Text(
-          'Fake Mail Generator',
-          style:
-              TextStyle(color: Colors.amber[300], fontWeight: FontWeight.bold),
-        )),
+          child: Text(
+            'Fake Mail Generator',
+            style: TextStyle(
+              color: Colors.amber[300],
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
