@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset('assets/img.png'),
+          Expanded(child: Image.asset('assets/img.png')),
           Card(
             elevation: 5.0,
             margin: EdgeInsets.all(10),
@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           Expanded(
+            flex: 2,
             child: Card(
               margin: EdgeInsets.only(top: 10.0),
               child: ListView(
