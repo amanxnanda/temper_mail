@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:temper_mail/models/generated_emails.dart';
+import 'package:temper_mail/services/api_response.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String email = "example@yourmail.com";
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
         title: Center(
@@ -29,14 +36,21 @@ class HomePage extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text('example@gmail.com'),
+              child: Text(email),
             ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  ApiResponse res = await getMail();
+                  // print(res.data);
+                  var finalEmail = generatedEmailModelFromJson(res.data);
+                  setState(() {
+                    email = finalEmail[0];
+                  });
+                },
                 icon: Icon(Icons.autorenew),
                 label: Text('Refresh'),
                 style: OutlinedButton.styleFrom(
