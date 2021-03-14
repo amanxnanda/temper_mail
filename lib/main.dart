@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 // import 'package:temper_mail/screen/home_page.dart';
@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const String appID = '604d79fa0d3499e757b61af4';
+const String appID =
+    '604d79fa0d3499e757b61af4'; //logined to dummyAPI, uski API token
 
 class Example extends StatelessWidget {
   const Example({Key key}) : super(key: key);
 
-  final String url = 'https://dummyapi.io/data/api/user/0F8JIqi4zwvb77FGz6Wt';
+  final String url =
+      'https://dummyapi.io/data/api/user/0F8JIqi4zwvb77FGz6Wt'; //dummyAPI ek user detail ur;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +38,7 @@ class Example extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             http.Response response = await http.get(
+              //await is used because we dont want our app to get stuck so that it can do some useful work when it is waiting for a response
               Uri.parse(url),
               headers: {'app-id': appID},
             );

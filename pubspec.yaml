@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  http: ^0.13.0
+  http: ^0.13.0 #get package from pub.dev and add here
   font_awesome_flutter: ^8.11.0
   flutter:
     sdk: flutter
