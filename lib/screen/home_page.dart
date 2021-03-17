@@ -13,9 +13,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String email = "example@yourmail.com";
+    var finalEmail;
   @override
   Widget build(BuildContext context) {
-    var finalEmail;
     return Scaffold(
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
@@ -63,7 +63,16 @@ class _HomePageState extends State<HomePage> {
               ),
               OutlinedButton.icon(
                 onPressed: () {
-                  Clipboard.setData(new ClipboardData(text: finalEmail[0]));
+                  Clipboard.setData(new ClipboardData(text: finalEmail[0]))
+                      .then(
+                    (value) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Copied to clipboard...'),
+                        ),
+                      );
+                    },
+                  );
                 },
                 icon: Icon(FontAwesomeIcons.copy),
                 label: Text('Clipboard'),
