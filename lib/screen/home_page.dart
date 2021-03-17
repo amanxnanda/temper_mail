@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:temper_mail/models/generated_emails.dart';
 import 'package:temper_mail/services/api_response.dart';
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   String email = "example@yourmail.com";
   @override
   Widget build(BuildContext context) {
+    var finalEmail;
     return Scaffold(
       backgroundColor: Colors.teal[100],
       appBar: AppBar(
@@ -46,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () async {
                   ApiResponse res = await getMail();
                   // print(res.data);
-                  var finalEmail = generatedEmailModelFromJson(res.data);
+                  finalEmail = generatedEmailModelFromJson(res.data);
                   setState(() {
                     email = finalEmail[0];
                   });
@@ -60,7 +62,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  Clipboard.setData(new ClipboardData(text: finalEmail[0]));
+                },
                 icon: Icon(FontAwesomeIcons.copy),
                 label: Text('Clipboard'),
                 style: OutlinedButton.styleFrom(
