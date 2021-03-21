@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:temper_mail/controller/email_controller.dart';
 import 'package:temper_mail/models/generated_emails.dart';
-import 'package:temper_mail/models/mailbox_model.dart';
 import 'package:temper_mail/screen/components/mail_box.dart';
 import 'package:temper_mail/services/api_response.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  final EmailController emailController = Get.put(EmailController());
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  var model;
-  String email = "aman@1secmail.com";
-  var finalEmail;
-
-  String username, domain;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +34,7 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.all(10),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text(email),
+              child: Text(emailController.emailModel.value.email),
             ),
           ),
           Row(
@@ -52,14 +43,9 @@ class _HomePageState extends State<HomePage> {
               OutlinedButton.icon(
                 onPressed: () async {
                   ApiResponse res = await getMail();
-                  // print(res.data);
-                  finalEmail = generatedEmailModelFromJson(res.data);
-                  setState(() {
-                    email = finalEmail[0];
-                    var paraList = email.split('@');
-                    username = paraList[0];
-                    domain = paraList[1];
-                  });
+
+                  String finalEmail = generatedEmailModelFromJson(res.data)[0];
+                  emailController.updateEmail(finalEmail);
                 },
                 icon: Icon(Icons.autorenew),
                 label: Text('Refresh'),
@@ -71,7 +57,7 @@ class _HomePageState extends State<HomePage> {
               ),
               OutlinedButton.icon(
                 onPressed: () {
-                  Clipboard.setData(new ClipboardData(text: finalEmail[0]))
+                  Clipboard.setData(new ClipboardData(text: emailController.emailModel.value.email))
                       .then(
                     (value) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -92,10 +78,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          MailBox(
-            username: username,
-            domain: domain,
-          ),
+          MailBox(),
         ],
       ),
     );

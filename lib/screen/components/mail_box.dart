@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:temper_mail/models/mailbox_model.dart';
 
 class MailBox extends StatelessWidget {
-  final String username;
-  final String domain;
+ 
   const MailBox({
     Key key,
-   @required this.username,
-    @required this.domain,
+  
   }) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
-    //TODO: for testing
-
-    // String username = 'aman';
-    // String domain = '1secmail.com';
+    
     return Expanded(
       flex: 2,
       child: Card(
         margin: EdgeInsets.only(top: 10.0),
         child: StreamBuilder(
-          stream: mailBoxStream(username, domain),
+          stream: mailBoxStream(),
           builder: (c, s) {
             var widget;
 

@@ -1,6 +1,8 @@
+class EmailModel {
+  String email;
 
-class Email  {
-  String username;
-  String domain;
-  Email({this.username,this.domain});
+  EmailModel({this.email = 'aman@1secmail.com'});
+
+  String get username => email.split('@')[0];
+  String get domain => email.split('@')[1];
 }

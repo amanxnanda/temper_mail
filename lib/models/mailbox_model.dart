@@ -4,7 +4,9 @@
 
 import 'dart:convert';
 
-import 'package:http/http.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:temper_mail/controller/email_controller.dart';
 import 'package:temper_mail/services/api_endpoints.dart';
 import 'package:temper_mail/services/api_response.dart';
 
@@ -44,9 +46,11 @@ class MailboxModel {
       };
 }
 
-Future<ApiResponse> getMailBox(String username, String domain) async {
-  Response response = await get(Uri.parse(
-      baseURL + '?action=getMessages&login=$username&domain=$domain'));
+final EmailController emailController = Get.put(emailController);
+
+Future<ApiResponse> getMailBox() async {
+  http.Response response = await http.get(Uri.parse(baseURL +
+      '?action=getMessages&login=${emailController.emailModel.value.username}&domain=${emailController.emailModel.value.domain}'));
 
   ApiResponse res;
 
@@ -64,8 +68,8 @@ Future<ApiResponse> getMailBox(String username, String domain) async {
   return res;
 }
 
-Stream<ApiResponse> mailBoxStream(String username, String domain) async* {
+Stream<ApiResponse> mailBoxStream() async* {
   while (true) {
-    yield await getMailBox(username, domain);
+    yield await getMailBox();
   }
 }

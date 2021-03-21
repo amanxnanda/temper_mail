@@ -2,12 +2,11 @@ import 'package:get/get.dart';
 import 'package:temper_mail/models/email_model.dart';
 
 class EmailController extends GetxController {
-  final Rx<Email> email = Email().obs;
+  final Rx<EmailModel> emailModel = EmailModel().obs;
 
-  updateEmail(String username, String domain) {
-    email.update((val) {
-      val.username = username;
-      val.domain = domain;
+  updateEmail(String email) {
+    emailModel.update((value) {
+      value.email = email;
     });
   }
 }
