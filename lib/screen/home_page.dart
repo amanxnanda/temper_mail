@@ -8,7 +8,12 @@ import 'package:temper_mail/screen/components/mail_box.dart';
 import 'package:temper_mail/services/api_response.dart';
 import 'package:temper_mail/services/services.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final EmailController emailController = Get.put(EmailController());
 
   @override
@@ -35,7 +40,7 @@ class HomePage extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text(emailController.emailModel.value.email),
+              child: Obx(() => Text(emailController.emailModel.value.email)),
             ),
           ),
           Row(
@@ -47,6 +52,8 @@ class HomePage extends StatelessWidget {
 
                   String finalEmail = generatedEmailModelFromJson(res.data)[0];
                   emailController.updateEmail(finalEmail);
+
+                  setState(() {});
                 },
                 icon: Icon(Icons.autorenew),
                 label: Text('Refresh'),
@@ -58,7 +65,8 @@ class HomePage extends StatelessWidget {
               ),
               OutlinedButton.icon(
                 onPressed: () {
-                  Clipboard.setData(new ClipboardData(text: emailController.emailModel.value.email))
+                  Clipboard.setData(new ClipboardData(
+                          text: emailController.emailModel.value.email))
                       .then(
                     (value) {
                       ScaffoldMessenger.of(context).showSnackBar(

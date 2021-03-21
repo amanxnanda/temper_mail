@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:temper_mail/models/mailbox_model.dart';
+import 'package:temper_mail/screen/mail_page.dart';
 import 'package:temper_mail/services/services.dart';
 
 class MailBox extends StatelessWidget {
- 
   const MailBox({
     Key key,
-  
   }) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
-    
     return Expanded(
       flex: 2,
       child: Card(
@@ -34,6 +31,9 @@ class MailBox extends StatelessWidget {
                   itemCount: sd.length,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      onTap: () {
+                        Get.to(() => MailPage(id: sd[index].id));
+                      },
                       leading: CircleAvatar(),
                       title: Text(sd[index].from),
                       subtitle: Text(sd[index].subject),

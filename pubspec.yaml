@@ -27,6 +27,7 @@ dependencies:
   font_awesome_flutter: ^8.11.0
   get: ^3.26.0
   http: ^0.13.0
+  webview_flutter: ^2.0.2
 
 dev_dependencies:
   flutter_test:
