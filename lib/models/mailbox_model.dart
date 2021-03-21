@@ -46,11 +46,11 @@ class MailboxModel {
       };
 }
 
-final EmailController emailController = Get.put(emailController);
+// final EmailController emailController = Get.put(emailController);
 
 Future<ApiResponse> getMailBox() async {
   http.Response response = await http.get(Uri.parse(baseURL +
-      '?action=getMessages&login=${emailController.emailModel.value.username}&domain=${emailController.emailModel.value.domain}'));
+      '?action=getMessages&login=${Get.find<EmailController>().emailModel.value.username}&domain=${Get.find<EmailController>().emailModel.value.domain}'));
 
   ApiResponse res;
 
