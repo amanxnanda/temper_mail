@@ -6,6 +6,7 @@ import 'package:temper_mail/controller/email_controller.dart';
 import 'package:temper_mail/models/generated_emails.dart';
 import 'package:temper_mail/screen/components/mail_box.dart';
 import 'package:temper_mail/services/api_response.dart';
+import 'package:temper_mail/services/services.dart';
 
 class HomePage extends StatelessWidget {
   final EmailController emailController = Get.put(EmailController());
@@ -42,7 +43,7 @@ class HomePage extends StatelessWidget {
             children: [
               OutlinedButton.icon(
                 onPressed: () async {
-                  ApiResponse res = await getMail();
+                  ApiResponse res = await Services().getMail();
 
                   String finalEmail = generatedEmailModelFromJson(res.data)[0];
                   emailController.updateEmail(finalEmail);

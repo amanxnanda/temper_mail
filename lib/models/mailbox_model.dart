@@ -3,13 +3,6 @@
 //     final mailboxModel = mailboxModelFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
-import 'package:temper_mail/controller/email_controller.dart';
-import 'package:temper_mail/services/api_endpoints.dart';
-import 'package:temper_mail/services/api_response.dart';
-
 // Used app.quicktype.io for generating model class for API response
 
 List<MailboxModel> mailboxModelFromJson(String str) => List<MailboxModel>.from(
@@ -46,30 +39,4 @@ class MailboxModel {
       };
 }
 
-// final EmailController emailController = Get.put(emailController);
 
-Future<ApiResponse> getMailBox() async {
-  http.Response response = await http.get(Uri.parse(baseURL +
-      '?action=getMessages&login=${Get.find<EmailController>().emailModel.value.username}&domain=${Get.find<EmailController>().emailModel.value.domain}'));
-
-  ApiResponse res;
-
-  try {
-    if (response.statusCode >= 200 && response.statusCode <= 205) {
-      res = ApiResponse(data: response.body);
-    }
-  } catch (e) {
-    res = ApiResponse(
-      error: true,
-      errorMessage: e.toString(),
-    );
-  }
-  // await Future.delayed(Duration(seconds: 5));
-  return res;
-}
-
-Stream<ApiResponse> mailBoxStream() async* {
-  while (true) {
-    yield await getMailBox();
-  }
-}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:temper_mail/models/mailbox_model.dart';
+import 'package:temper_mail/services/services.dart';
 
 class MailBox extends StatelessWidget {
  
@@ -18,7 +19,7 @@ class MailBox extends StatelessWidget {
       child: Card(
         margin: EdgeInsets.only(top: 10.0),
         child: StreamBuilder(
-          stream: mailBoxStream(),
+          stream: Services().mailBoxStream(),
           builder: (c, s) {
             var widget;
 
