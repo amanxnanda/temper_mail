@@ -5,7 +5,11 @@ import 'package:temper_mail/screen/home_page.dart';
 
 // import 'package:http/http.dart' as http;
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override

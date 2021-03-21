@@ -60,5 +60,12 @@ Future<ApiResponse> getMailBox(String username, String domain) async {
       errorMessage: e.toString(),
     );
   }
+  // await Future.delayed(Duration(seconds: 5));
   return res;
+}
+
+Stream<ApiResponse> mailBoxStream(String username, String domain) async* {
+  while (true) {
+    yield await getMailBox(username, domain);
+  }
 }

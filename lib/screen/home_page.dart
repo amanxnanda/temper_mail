@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:temper_mail/models/generated_emails.dart';
 import 'package:temper_mail/models/mailbox_model.dart';
+import 'package:temper_mail/screen/components/mail_box.dart';
 import 'package:temper_mail/services/api_response.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +15,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var model;
-  String email = "example@yourmail.com";
+  String email = "aman@1secmail.com";
   var finalEmail;
 
   String username, domain;
@@ -93,42 +92,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                ApiResponse res = await getMailBox(username, domain);
-
-
-                if (jsonDecode(res.data).toString().isNotEmpty)
-                  model = mailboxModelFromJson(res.data);
-
-                print(model);
-              },
-              child: Text('Get MailBox!'),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Card(
-              margin: EdgeInsets.only(top: 10.0),
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: CircleAvatar(),
-                    title: Text('$index Name'),
-                    subtitle: Text('Subject'),
-                    trailing: Text('12:0$index pm'),
-                  );
-                },
-              ),
-            ),
+          MailBox(
+            username: username,
+            domain: domain,
           ),
         ],
       ),
     );
   }
 }
-
