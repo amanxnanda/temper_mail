@@ -3,11 +3,6 @@
 //     final mailboxModel = mailboxModelFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:http/http.dart';
-import 'package:temper_mail/services/api_endpoints.dart';
-import 'package:temper_mail/services/api_response.dart';
-
 // Used app.quicktype.io for generating model class for API response
 
 List<MailboxModel> mailboxModelFromJson(String str) => List<MailboxModel>.from(
@@ -44,21 +39,4 @@ class MailboxModel {
       };
 }
 
-Future<ApiResponse> getMailBox(String username, String domain) async {
-  Response response = await get(Uri.parse(
-      baseURL + '?action=getMessages&login=$username&domain=$domain'));
 
-  ApiResponse res;
-
-  try {
-    if (response.statusCode >= 200 && response.statusCode <= 205) {
-      res = ApiResponse(data: response.body);
-    }
-  } catch (e) {
-    res = ApiResponse(
-      error: true,
-      errorMessage: e.toString(),
-    );
-  }
-  return res;
-}

@@ -1,25 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:temper_mail/controller/email_controller.dart';
 import 'package:temper_mail/models/generated_emails.dart';
-import 'package:temper_mail/models/mailbox_model.dart';
+import 'package:temper_mail/screen/components/mail_box.dart';
 import 'package:temper_mail/services/api_response.dart';
+import 'package:temper_mail/services/services.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  var model;
-  String email = "example@yourmail.com";
-  var finalEmail;
+  final EmailController emailController = Get.put(EmailController());
 
-  String username, domain;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +40,7 @@ class _HomePageState extends State<HomePage> {
             margin: EdgeInsets.all(10),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Text(email),
+              child: Obx(() => Text(emailController.emailModel.value.email)),
             ),
           ),
           Row(
@@ -52,15 +48,12 @@ class _HomePageState extends State<HomePage> {
             children: [
               OutlinedButton.icon(
                 onPressed: () async {
-                  ApiResponse res = await getMail();
-                  // print(res.data);
-                  finalEmail = generatedEmailModelFromJson(res.data);
-                  setState(() {
-                    email = finalEmail[0];
-                    var paraList = email.split('@');
-                    username = paraList[0];
-                    domain = paraList[1];
-                  });
+                  ApiResponse res = await Services().getMail();
+
+                  String finalEmail = generatedEmailModelFromJson(res.data)[0];
+                  emailController.updateEmail(finalEmail);
+
+                  setState(() {});
                 },
                 icon: Icon(Icons.autorenew),
                 label: Text('Refresh'),
@@ -72,7 +65,8 @@ class _HomePageState extends State<HomePage> {
               ),
               OutlinedButton.icon(
                 onPressed: () {
-                  Clipboard.setData(new ClipboardData(text: finalEmail[0]))
+                  Clipboard.setData(new ClipboardData(
+                          text: emailController.emailModel.value.email))
                       .then(
                     (value) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -93,42 +87,9 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: ElevatedButton(
-              onPressed: () async {
-                ApiResponse res = await getMailBox(username, domain);
-
-
-                if (jsonDecode(res.data).toString().isNotEmpty)
-                  model = mailboxModelFromJson(res.data);
-
-                print(model);
-              },
-              child: Text('Get MailBox!'),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Card(
-              margin: EdgeInsets.only(top: 10.0),
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: CircleAvatar(),
-                    title: Text('$index Name'),
-                    subtitle: Text('Subject'),
-                    trailing: Text('12:0$index pm'),
-                  );
-                },
-              ),
-            ),
-          ),
+          MailBox(),
         ],
       ),
     );
   }
 }
-
